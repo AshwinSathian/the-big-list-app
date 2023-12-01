@@ -1,0 +1,20 @@
+<p-menubar [model]="items" class="w-full">
+  <ng-template pTemplate="start">
+    <div class="flex gap-3 mx-3">
+      <i class="pi pi-filter text-xl text-white"></i>
+      <div class="text-xl font-normal">Group By</div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="end">
+    @if ((selectedFilter$ | async)){
+    <div class="mx-3">
+      <p-button
+        label="Clear"
+        icon="pi pi-times"
+        severity="danger"
+        (click)="clearFilter()"
+      ></p-button>
+    </div>
+    }
+  </ng-template>
+</p-menubar>
