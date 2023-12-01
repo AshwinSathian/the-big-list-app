@@ -1,5 +1,5 @@
-<p-card class="m-2 min-h-fit p-0">
-  <div class="w-full flex items-center justify-between text-md m-0">
+<p-card class="p-0 my-2">
+  <div class="w-full flex items-center justify-between text-md m-0 h-3">
     <div class="flex items-center gap-2">
       <div class="text-gray-500 font-light">{{ ticket?.id }}</div>
       <div>
@@ -7,7 +7,15 @@
           *ngTemplateOutlet="statusIcon; context: { status: ticket?.status }"
         ></ng-container>
       </div>
-      <div class="text-white font-normal">{{ ticket?.title }}</div>
+      <div class="flex flex-col gap-1 items-start">
+        <div class="text-white font-normal">{{ ticket?.title }}</div>
+        @if(ticket?.labels?.length){
+        <div class="text-gray-500 font-light text-xs">
+          <span class="font-normal">Labels</span>:
+          {{ ticket?.labels || [] | stringJoin }}
+        </div>
+        }
+      </div>
     </div>
     <div class="flex items-center gap-2">
       <div>
@@ -19,7 +27,7 @@
         ></ng-container>
       </div>
       <div
-        class="text-white font-normal bg-black p-4 rounded-full text-xl"
+        class="text-white font-normal bg-black p-3 rounded-full text-lg"
         [pTooltip]="ticket?.assignee"
       >
         {{ ticket?.assignee | initials }}
