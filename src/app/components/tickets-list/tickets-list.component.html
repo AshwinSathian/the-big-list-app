@@ -1,0 +1,10 @@
+<cdk-virtual-scroll-viewport
+  itemSize="200"
+  class="w-4/5 min-h-screen p-4 flex flex-col gap-2 bg-transparent mx-auto"
+  (scrolledIndexChange)="onScroll($event)"
+>
+  <app-tickets-list-item
+    *cdkVirtualFor="let ticket of tickets"
+    [ticket]="ticket"
+  ></app-tickets-list-item>
+</cdk-virtual-scroll-viewport>
