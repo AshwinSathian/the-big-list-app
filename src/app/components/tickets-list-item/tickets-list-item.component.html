@@ -1,7 +1,15 @@
 <p-card class="p-0 my-2">
   <div class="w-full flex items-center justify-between text-md m-0 h-3">
     <div class="flex items-center gap-2">
-      <div class="text-gray-500 font-light">{{ ticket?.id }}</div>
+      <div class="flex flex-col gap-1">
+        <div class="text-gray-500 font-light">{{ ticket?.id }}</div>
+        <p-tag
+          [value]="ticket?.teamID"
+          [rounded]="true"
+          [style]="{ width: '5rem' }"
+        ></p-tag>
+      </div>
+
       <div>
         <ng-container
           *ngTemplateOutlet="statusIcon; context: { status: ticket?.status }"

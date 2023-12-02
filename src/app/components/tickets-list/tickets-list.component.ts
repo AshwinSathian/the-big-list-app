@@ -6,6 +6,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Ticket } from '../../interfaces/ticket';
 import { TicketsService } from '../../services/tickets.service';
 import { TicketsListItemComponent } from '../tickets-list-item/tickets-list-item.component';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-tickets-list',
@@ -20,20 +21,23 @@ export class TicketsListComponent {
   currentPage = 1;
   isLoading = false;
 
-  constructor(private _service: TicketsService) {}
+  constructor(
+    private _service: TicketsService,
+    private _loaderService: LoaderService
+  ) {}
 
   ngOnInit() {
     this._loadTickets();
   }
 
   private _loadTickets() {
-    this.isLoading = true;
+    this._loaderService.setLoader(true);
     this._service.getTicketsByPage(this.currentPage).subscribe({
       next: (data) => {
         if (data) {
           this.tickets = [...this.tickets, ...data];
           this.currentPage++;
-          this.isLoading = false;
+          this._loaderService.setLoader();
         }
       },
       error: (error) => {

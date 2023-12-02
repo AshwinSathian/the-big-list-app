@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardModule } from 'primeng/card';
+import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { Priority } from '../../enums/priority.enum';
 import { Status } from '../../enums/status.enum';
@@ -16,6 +17,7 @@ import { StringJoinPipe } from '../../pipes/string-join.pipe';
     CardModule,
     InitialsPipe,
     TooltipModule,
+    TagModule,
     StringJoinPipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
