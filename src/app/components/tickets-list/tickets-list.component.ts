@@ -17,7 +17,9 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class TicketsListComponent {
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
+
   tickets: Ticket[] = [];
+  groupedTickets: { [option: string]: Ticket[] } = {};
   currentPage = 1;
   isLoading = false;
 
@@ -28,21 +30,36 @@ export class TicketsListComponent {
 
   ngOnInit() {
     this._loadTickets();
+
+    this._service.groupedTickets$.subscribe({
+      next: (data) => {
+        if (Object.keys(data || {})?.length) {
+          this.groupedTickets = JSON.parse(JSON.stringify(data));
+          console.log(this.groupedTickets);
+          this._loaderService.setLoader();
+        }
+      },
+      error: (error) => {
+        console.error('Error loading grouped tickets:', error);
+        this._loaderService.setLoader();
+      },
+    });
   }
 
   private _loadTickets() {
     this._loaderService.setLoader(true);
     this._service.getTicketsByPage(this.currentPage).subscribe({
       next: (data) => {
-        if (data) {
+        if (data?.length) {
           this.tickets = [...this.tickets, ...data];
           this.currentPage++;
+          this._service.setTickets(this.tickets);
           this._loaderService.setLoader();
         }
       },
       error: (error) => {
         console.error('Error loading tickets:', error);
-        this.isLoading = false;
+        this._loaderService.setLoader();
       },
     });
   }
