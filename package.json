@@ -1,6 +1,10 @@
 {
   "name": "big-list-app",
   "version": "0.0.0",
+  "author": {
+    "name": "Ashwin Sathian",
+    "email": "ashwinsathyan19@gmail.com"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
