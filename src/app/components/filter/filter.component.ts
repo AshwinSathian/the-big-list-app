@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -14,28 +14,12 @@ import { FilterService } from '../../services/filter.service';
   styleUrl: './filter.component.css',
 })
 export class FilterComponent {
-  items: MenuItem[] = [
-    {
-      id: Filter.status,
-      label: 'Status',
-      command: () => this.setFilter(Filter.status),
-    },
-    {
-      id: Filter.labels,
-      label: 'Labels',
-      command: () => this.setFilter(Filter.labels),
-    },
-    {
-      id: Filter.priority,
-      label: 'Priority',
-      command: () => this.setFilter(Filter.priority),
-    },
-    {
-      id: Filter.assignee,
-      label: 'Assignee',
-      command: () => this.setFilter(Filter.assignee),
-    },
-  ];
+  private _titleCasePipe = new TitleCasePipe();
+  items: MenuItem[] = Object.keys(Filter).map((key) => ({
+    id: Filter[key as keyof typeof Filter],
+    label: this._titleCasePipe.transform(key),
+    command: () => this.setFilter(Filter[key as keyof typeof Filter]),
+  }));
 
   selectedFilter$ = this._service.selectedFilter$;
 
