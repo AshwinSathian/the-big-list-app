@@ -1,6 +1,10 @@
-# BigListApp
+# The Big List App
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.1.
+
+## Live Demo
+
+A deployed version of the app may be viewed [here](https://the-big-list-app.vercel.app/)
 
 ## Development server
 
