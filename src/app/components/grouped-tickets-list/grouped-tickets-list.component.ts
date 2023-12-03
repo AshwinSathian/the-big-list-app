@@ -2,35 +2,32 @@ import {
   CdkVirtualScrollViewport,
   ScrollingModule,
 } from '@angular/cdk/scrolling';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AccordionModule } from 'primeng/accordion';
 import { Ticket } from '../../interfaces/ticket';
+import { LoaderService } from '../../services/loader.service';
 import { TicketsService } from '../../services/tickets.service';
 import { TicketsListItemComponent } from '../tickets-list-item/tickets-list-item.component';
-import { LoaderService } from '../../services/loader.service';
 
 @Component({
-  selector: 'app-tickets-list',
+  selector: 'app-grouped-tickets-list',
   standalone: true,
-  imports: [ScrollingModule, TicketsListItemComponent],
-  templateUrl: './tickets-list.component.html',
-  styleUrl: './tickets-list.component.css',
+  imports: [AccordionModule, ScrollingModule, TicketsListItemComponent],
+  templateUrl: './grouped-tickets-list.component.html',
+  styleUrl: './grouped-tickets-list.component.css',
 })
-export class TicketsListComponent {
+export class GroupedTicketsListComponent implements OnInit {
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
 
-  tickets: Ticket[] = [];
-  groupedTickets: { [option: string]: Ticket[] } = {};
-  currentPage = 1;
   keys: string[] = [];
+  groupedTickets: { [option: string]: Ticket[] } = {};
 
   constructor(
     private _service: TicketsService,
     private _loaderService: LoaderService
   ) {}
 
-  ngOnInit() {
-    this._loadTickets();
-
+  ngOnInit(): void {
     this._service.groupedTickets$.subscribe({
       next: (data) => {
         this.keys = Object.keys(data || {});
@@ -46,29 +43,8 @@ export class TicketsListComponent {
     });
   }
 
-  private _loadTickets() {
-    this._loaderService.setLoader(true);
-    this._service.getTicketsByPage(this.currentPage).subscribe({
-      next: (data) => {
-        if (data?.length) {
-          this.tickets = [...this.tickets, ...data];
-          this.currentPage++;
-          this._service.setTickets(this.tickets);
-          this._loaderService.setLoader();
-        }
-      },
-      error: (error) => {
-        console.error('Error loading tickets:', error);
-        this._loaderService.setLoader();
-      },
-    });
-  }
-
   onScroll(index: number) {
     const end = this.viewport.getRenderedRange().end;
     const total = this.viewport.getDataLength();
-    if (end === total) {
-      this._loadTickets();
-    }
   }
 }

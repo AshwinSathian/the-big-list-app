@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { TicketsListComponent } from './components/tickets-list/tickets-list.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { GroupedTicketsListComponent } from './components/grouped-tickets-list/grouped-tickets-list.component';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     TicketsListComponent,
     FilterComponent,
     LoaderComponent,
+    GroupedTicketsListComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

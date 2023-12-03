@@ -1,0 +1,18 @@
+@if (keys.length) {
+<p-accordion [multiple]="true">
+  @for (key of keys; track key) {
+  <p-accordionTab [header]="key">
+    <cdk-virtual-scroll-viewport
+      itemSize="100"
+      class="w-full grouped-list-container p-2 flex flex-col gap-2 bg-transparent mx-auto"
+      (scrolledIndexChange)="onScroll($event)"
+    >
+      <app-tickets-list-item
+        *cdkVirtualFor="let ticket of groupedTickets[key]"
+        [ticket]="ticket"
+      ></app-tickets-list-item>
+    </cdk-virtual-scroll-viewport>
+  </p-accordionTab>
+  }
+</p-accordion>
+}

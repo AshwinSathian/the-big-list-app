@@ -34,12 +34,14 @@
           "
         ></ng-container>
       </div>
+      @if (ticket?.assignee) {
       <div
         class="text-white font-normal bg-black p-3 rounded-full text-lg"
         [pTooltip]="ticket?.assignee"
       >
         {{ ticket?.assignee | initials }}
       </div>
+      }
     </div>
   </div>
 </p-card>
