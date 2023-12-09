@@ -25,7 +25,9 @@ export class FilterService {
     private _loaderService: LoaderService
   ) {
     _ticketsService.tickets$.subscribe((tickets) => {
-      if (tickets?.length) this.tickets = tickets;
+      if (tickets?.length) {
+        this.tickets = tickets;
+      }
     });
 
     if (typeof Worker !== 'undefined') {
