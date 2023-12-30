@@ -8,6 +8,7 @@ import { Ticket } from '../../interfaces/ticket';
 import { LoaderService } from '../../services/loader.service';
 import { TicketsService } from '../../services/tickets.service';
 import { TicketsListItemComponent } from '../tickets-list-item/tickets-list-item.component';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'app-grouped-tickets-list',
@@ -24,6 +25,7 @@ export class GroupedTicketsListComponent implements OnInit {
 
   constructor(
     private _service: TicketsService,
+    private _filterService: FilterService,
     private _loaderService: LoaderService
   ) {}
 
@@ -39,6 +41,14 @@ export class GroupedTicketsListComponent implements OnInit {
       error: (error) => {
         console.error('Error loading grouped tickets:', error);
         this._loaderService.setLoader();
+      },
+    });
+
+    this._filterService.selectedFilterOptions$.subscribe({
+      next: (data) => {
+        if (!data?.length) {
+          this.keys = [];
+        }
       },
     });
   }
